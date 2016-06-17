@@ -137,6 +137,24 @@ nrow(locs14) + nrow(locs15) + nrow(tets)
 #sweet
 
 #################
+# run1 error about coeff table
+##################
+COEFcsv=array(NA,c(1,15))
+COEFcsv[1,]=c("animal","asym1","asym2","t1","t2","dur1","dur2","intercept","nomadbeta","day0","distance",
+              "springstart","springend","fallstart","fallend")
+write.table(COEFcsv, append=FALSE,
+            paste0(outputpath,"COEFFICIENTStable.csv"), 
+            sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE)
+
+  
+write.table(coefs, append=TRUE,
+              paste0(outputpath,"COEFFICIENTStable.csv"),
+              sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE, na="NA")
+#yeah, i screwed that up when i moved that code around without
+#actually looking hard enough to see what it was doing.
+#reverting to previous...
+
+#################
 # misc helpful stuff
 ##################
 

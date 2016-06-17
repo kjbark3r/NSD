@@ -8,9 +8,9 @@
 
 #working directory
   wd_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD"
-    out_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD\\output"
+    out_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD\\output\\"
   wd_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD"
-    out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output"
+    out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\"
   
   if (file.exists(wd_workcomp)) {
     setwd(wd_workcomp)
@@ -60,9 +60,24 @@ U_t2=293 # December 15
 
 # data
 dataall <- read.csv("nsd-locs-2014.csv") 
-elklist <- unique(dataall$AnimalID) 
+elklist <- as.data.frame(unique(dataall$AnimalID))
 numelk <- nrow(elklist)
-attach(dataall) #unsure what this does - run it
+attach(dataall)
+
+# blank aic csv
+AICcsv = array(NA,c(1,7))
+AICcsv[1,]=c("animal","migrant","mixed-migrant","disperser","resident","nomad","bestmodel")
+write.table(AICcsv, append=FALSE,
+            paste0(outputpath,"AICtable.csv"), 
+            sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE)
+
+#blank coefficient csv
+COEFcsv=array(NA,c(1,15))
+COEFcsv[1,]=c("animal","asym1","asym2","t1","t2","dur1","dur2","intercept","nomadbeta","day0","distance",
+              "springstart","springend","fallstart","fallend")
+write.table(COEFcsv, append=FALSE,
+            paste0(outputpath,"COEFFICIENTStable.csv"), 
+            sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE)
 
 for(i in 1:numelk) {
   ######### PER-ANIMAL CODE 
@@ -71,18 +86,16 @@ for(i in 1:numelk) {
   datasub<-subset(dataall, AnimalID==elk)	#Subset data to 1 animal 
   
   ##Calculate NSD - distance from first location (km)
-  datasub=datasub[order(datasub$J_day_new),]
-  datasub["NSD"]=((((datasub$X_UTM - datasub$X_UTM[1])/1000)^2) + (((datasub$Y_UTM - datasub$Y_UTM[1])/1000)^2))
+  datasub = datasub[order(datasub$J_day_new),]
+  datasub["NSD"] = ((((datasub$X_UTM - datasub$X_UTM[1])/1000)^2) + (((datasub$Y_UTM - datasub$Y_UTM[1])/1000)^2))
   
-  #set up AIC table
+  #set up AIC and coefficient tables
   AICtable = array(NA,c(1,7))
-  AICtable[1,]=c("animal","migrant","mixed-migrant","disperser","resident","nomad","bestmodel")
-  
-  #set up coefficient table
+  AICtable[1,1] = elk
   coefs=array(NA,c(1,15))
-  coefs[1,]=c("animal","asym1","asym2","t1","t2","dur1","dur2","intercept","nomadbeta","day0","distance",
-				"springstart","springend","fallstart","fallend")
+  coefs[1,1]=elk
 
+  #indiv img
   png(filename=paste0(outputpath,elk,".png"),height=800,width=900,pointsize=16,bg="white")
   par(mfrow=c(2,3))
   
@@ -178,7 +191,7 @@ for(i in 1:numelk) {
   AICtable[1,7] = bestmodel
   
   write.table(AICtable, append=TRUE,
-              paste0(outputpath,"AICtable2014.csv"), 
+              paste0(outputpath,"AICtable.csv"), 
               sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE, na="NA")
   
   #COEFFICIENT table
@@ -220,7 +233,7 @@ for(i in 1:numelk) {
   }
   
   write.table(coefs, append=TRUE,
-              paste0(outputpath,"COEFFICIENTStable2014.csv"),
+              paste0(outputpath,"COEFFICIENTStable.csv"),
               sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE, na="NA")
 }
 
@@ -236,9 +249,24 @@ U_t2=326 # December 15
 
 # data
 dataall <- read.csv("nsd-locs-2015.csv")
-elklist <- unique(dataall$AnimalID)
+elklist <- as.data.frame(unique(dataall$AnimalID))
 numelk <- nrow(elklist)
 attach(dataall)
+
+# blank aic csv
+AICcsv = array(NA,c(1,7))
+AICcsv[1,]=c("animal","migrant","mixed-migrant","disperser","resident","nomad","bestmodel")
+write.table(AICcsv, append=FALSE,
+            paste0(outputpath,"AICtable.csv"), 
+            sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE)
+
+#blank coefficient csv
+COEFcsv=array(NA,c(1,15))
+COEFcsv[1,]=c("animal","asym1","asym2","t1","t2","dur1","dur2","intercept","nomadbeta","day0","distance",
+              "springstart","springend","fallstart","fallend")
+write.table(COEFcsv, append=FALSE,
+            paste0(outputpath,"COEFFICIENTStable.csv"), 
+            sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE)
 
 for(i in 1:numelk) {
   ######### PER-ANIMAL CODE 
@@ -247,18 +275,16 @@ for(i in 1:numelk) {
   datasub<-subset(dataall, AnimalID==elk)	#Subset data to 1 animal 
   
   ##Calculate NSD - distance from first location (km)
-  datasub=datasub[order(datasub$J_day_new),]
-  datasub["NSD"]=((((datasub$X_UTM - datasub$X_UTM[1])/1000)^2) + (((datasub$Y_UTM - datasub$Y_UTM[1])/1000)^2))
+  datasub = datasub[order(datasub$J_day_new),]
+  datasub["NSD"] = ((((datasub$X_UTM - datasub$X_UTM[1])/1000)^2) + (((datasub$Y_UTM - datasub$Y_UTM[1])/1000)^2))
   
-  #set up AIC table
+  #set up AIC and coefficient tables
   AICtable = array(NA,c(1,7))
-  AICtable[1,]=c("animal","migrant","mixed-migrant","disperser","resident","nomad","bestmodel")
-  
-  #set up coefficient table
+  AICtable[1,1] = elk
   coefs=array(NA,c(1,15))
-  coefs[1,]=c("animal","asym1","asym2","t1","t2","dur1","dur2","intercept","nomadbeta","day0","distance",
-				"springstart","springend","fallstart","fallend")
+  coefs[1,1]=elk
 
+  #indiv img
   png(filename=paste0(outputpath,elk,".png"),height=800,width=900,pointsize=16,bg="white")
   par(mfrow=c(2,3))
   
@@ -354,7 +380,7 @@ for(i in 1:numelk) {
   AICtable[1,7] = bestmodel
   
   write.table(AICtable, append=TRUE,
-              paste0(outputpath,"AICtable2015.csv"), 
+              paste0(outputpath,"AICtable.csv"), 
               sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE, na="NA")
   
   #COEFFICIENT table
@@ -396,6 +422,6 @@ for(i in 1:numelk) {
   }
   
   write.table(coefs, append=TRUE,
-              paste0(outputpath,"COEFFICIENTStable2015.csv"),
+              paste0(outputpath,"COEFFICIENTStable.csv"),
               sep=",", col.names=FALSE, row.names=FALSE, quote=FALSE, na="NA")
 }
