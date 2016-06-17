@@ -73,14 +73,27 @@ unique(mid$TimingSpr15)
 unique(mid$TimingFall15)
 
 #################
-# julian dates
+# adding julian days and dates
 ##################
-testj <- locs #play data
-class(testj$Date)
-testj$Date <- as.POSIXct(testj$Date)
-mutate(testj, Julian_date = julian(testj$Date))
+rm(a)
+a <- locs #play data
+a$Date <- as.Date(a$Date)
+class(a$Date)
+b <- julian(a$Date) #works but wrong origin
+b <- julian(a$Date, origin = as.Date("2014-01-01"))
+#fuck yeah. now make it a column
 
-#easiest if data is POSIXct
+a <- mutate(a, J_day = julian(a$Date, origin = as.Date("2014-01-01")))
+#ok now make different origins for 2014 and 2015
+
+rm(a)
+a <- locs 
+a$Date <- as.Date(a$Date)
+
+a$J_day = ifelse(a$Date < "2015-01-01",
+  julian(a$Date, origin = as.Date("2014-01-01")),
+  julian(a$Date, origin = as.Date("2015-01-01")))
+
 
 #things that don't work
 as.Date(testj$Date, format = "%Y-%m-%d")
@@ -88,6 +101,40 @@ julian(testj$Date) #you didn't store anything, durrrr
 
 testj$Date <- as.Date(testj$Date)
 testj$Julian_date <- julian(testj$Date) #makes vector
+
+testj$Date <- as.POSIXct(testj$Date) #Date prob easier
+
+testj$Date <- as.Date(testj$Date) #also try as.Date
+testj <- testj %>%
+  mutate(ifelse(Date < "2015-01-01", 
+        Julian_date = julian(testj$Date, origin = as.Date("2014-01-01")),
+        Julian_date = julian(testj$Date, origin = as.Date("2015-01-01"))))
+  #error: unused arguments
+
+b <- julian(a$Date, origin = "2014-01-01")
+#error: non-numeric argument to binary operator
+
+a <- mutate(a, J_date = julian(a$Date, origin = as.Date("1970-01-01")))
+#wrong origin
+
+a <- mutate(a, J_date = julian(a$Date, origin = as.Date("1900-01-01")))
+  #just realized J_date is never actually called in the code
+  #not sure why it was in Kelly's example data but I'm gonna ignore it
+
+ifelse(Date < "2015-01-01", 
+  J_day = julian(a$Date, origin = as.Date("2014-01-01")),
+  J_day = julian(a$Date, origin = as.Date("2015-01-01"))))
+#error unused arg
+
+#################
+# error checking
+##################
+
+#making sure subsetted 2014/2015 data includes all locs
+#i want everything except the 2015 capture date
+tets <- subset(locs, Date == "2015-01-23")
+nrow(locs14) + nrow(locs15) + nrow(tets)
+#sweet
 
 #################
 # misc helpful stuff

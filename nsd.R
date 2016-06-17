@@ -60,8 +60,8 @@ U_t2=293 # December 15
 
 # data
 dataall <- read.csv("nsd-locs-2014.csv") 
-elklist2014 <- unique(dataall$AnimalID) 
-numelk <- nrow(elklist2014)
+elklist <- unique(dataall$AnimalID) 
+numelk <- nrow(elklist)
 attach(dataall) #unsure what this does - run it
 
 for(i in 1:numelk) {
@@ -236,8 +236,8 @@ U_t2=326 # December 15
 
 # data
 dataall <- read.csv("nsd-locs-2015.csv")
-elklist2015 <- unique(dataall$AnimalID)
-numelk <- nrow(elklist2015)
+elklist <- unique(dataall$AnimalID)
+numelk <- nrow(elklist)
 attach(dataall)
 
 for(i in 1:numelk) {
