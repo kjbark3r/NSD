@@ -3,7 +3,7 @@
 ########  NSERP - Kristin Barker - June 2016  ########
 ######################################################
 
-##SET WD, INPUT PATH, OUTPUT PATH
+##WD
 wd_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD"
 wd_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD"
 
@@ -40,15 +40,25 @@ locs <- alllocs %>%
 latlong <- CRS("+init=epsg:4326")
 nad27 <- CRS("+init=epsg:26712")
   #transform data
-xy.nsd <- data.frame("x" = locs$Long, "y" = locs$Lat)
+xy.nsd <- data.frame("X_UTM" = locs$Long, "Y_UTM" = locs$Lat)
 xy.spdf <- SpatialPointsDataFrame(coords=xy.nsd, data=locs, proj4string = latlong)
 utms <- spTransform(xy.spdf, nad27)
 locs <- as.data.frame(utms)
-write.csv(locs, file = "nsd-locs-all.csv")
 
+#Add julian day and start date
+  #julian day
+locs <- 
+
+#Remove extraneous columns
+locs <- subset(locs, select = c("AnimalID", "Date", "Julian_date", "J_day_new", 
+                                "X_UTM", "Y_UTM"))
+  
 #Separate datasets for 2014 and 2015
 locs$Date <- as.character(locs$Date)
 locs14 <- subset(locs, Date < "2015-01-01")
-  write.csv(locs14, file = "nsd-locs-2014.csv")
 locs15 <- subset(locs, Date >= "2015-01-01")
-  write.csv(locs15, file = "nsd-locs-2015.csv")
+
+#write csvs
+write.csv(locs, file = "nsd-locs-all.csv")
+write.csv(locs14, file = "nsd-locs-2014.csv")
+write.csv(locs15, file = "nsd-locs-2015.csv")

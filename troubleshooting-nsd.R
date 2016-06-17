@@ -72,6 +72,22 @@ unique(mid$TimingFall14)
 unique(mid$TimingSpr15)
 unique(mid$TimingFall15)
 
+#################
+# julian dates
+##################
+testj <- locs #play data
+class(testj$Date)
+testj$Date <- as.POSIXct(testj$Date)
+mutate(testj, Julian_date = julian(testj$Date))
+
+#easiest if data is POSIXct
+
+#things that don't work
+as.Date(testj$Date, format = "%Y-%m-%d")
+julian(testj$Date) #you didn't store anything, durrrr
+
+testj$Date <- as.Date(testj$Date)
+testj$Julian_date <- julian(testj$Date) #makes vector
 
 #################
 # misc helpful stuff
