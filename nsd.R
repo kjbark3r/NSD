@@ -8,24 +8,17 @@
 
 #working directory
   wd_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD"
-    out_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD\\output\\"
   wd_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD"
-    out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\"
   
   if (file.exists(wd_workcomp)) {
     setwd(wd_workcomp)
-    inputpath = wd_workcomp
-    outputpath = out_workcomp
   } else {
     if(file.exists(wd_laptop)) {
       setwd(wd_laptop)
-      inputpath = wd_laptop
-      outputpath = out_laptop
     } else {
       cat("Are you SURE you got that file path right?\n")
     }
   }
-  rm(wd_workcomp, wd_laptop, out_workcomp, out_laptop)
 
 #packages
   library(gsubfn)
@@ -38,8 +31,8 @@
 	#asymptotes - migration distance from starting point - km^2 
 		#migrant must move minimum 1 mile from starting location (2.2 km)
 		#mixed migrant must return half that distance
-		L_a1=4.84 #spring 2014 migration
-		L_a2=2.42 #fall 2014 return
+		L_a1=1.21 #spring 2014 migration
+
 	#duration - 1/4 duration of migration
 		#must remain on different seasonal range > 30 days
 		L_dur1=0
@@ -52,6 +45,21 @@
 # 2014 CODE
 ##################################
 
+# output subfolder
+out_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD\\output\\2014\\"
+out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\2014\\"
+
+ if (file.exists(wd_workcomp)) {
+	 outputpath = out_workcomp
+  } else {
+	if(file.exists(wd_laptop)) {
+	  outputpath = out_laptop
+	} else {
+	  cat("Are you SURE you got that file path right?\n")
+	}
+  }
+  rm(out_workcomp, out_laptop)
+	
 # 2014 midpoint dates
 L_t1=18  # March 15
 U_t1=125 # June 30
@@ -241,6 +249,21 @@ for(i in 1:numelk) {
 # 2015 CODE
 ##################################
 
+# output subfolder
+out_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD\\output\\2015\\"
+out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\2015\\"
+
+ if (file.exists(wd_workcomp)) {
+	 outputpath = out_workcomp
+  } else {
+	if(file.exists(wd_laptop)) {
+	  outputpath = out_laptop
+	} else {
+	  cat("Are you SURE you got that file path right?\n")
+	}
+  }
+  rm(wd_workcomp, wd_laptop, out_workcomp, out_laptop)
+	  
 # 2015 midpoint dates
 L_t1=51  # March 15
 U_t1=158 # June 30
@@ -248,6 +271,7 @@ L_t2=204 # August 15
 U_t2=326 # December 15
 
 # data
+detach(dataall)
 dataall <- read.csv("nsd-locs-2015.csv")
 elklist <- as.data.frame(unique(dataall$AnimalID))
 numelk <- nrow(elklist)
