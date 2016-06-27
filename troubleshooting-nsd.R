@@ -154,6 +154,51 @@ write.table(coefs, append=TRUE,
 #actually looking hard enough to see what it was doing.
 #reverting to previous...
 
+###################################
+#DELETED CODE
+#THAT WORKS BUT IS NO LONGER USEFUL
+###################################
+
+# combining results of different runs
+# (below runs i'm not interested in)
+
+# run2
+nsd14.r2 <- read.csv('./run2/2014/AICtable.csv') %>%
+  mutate(run2.2014 = ifelse(bestmodel == 1, "Migrant",
+    ifelse(bestmodel == 2, "MixedMigrant", 
+      ifelse(bestmodel == 3, "Disperser",
+        ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
+  rename(mod2.2014 = bestmodel)
+
+nsd15.r2 <- read.csv('./run2/2015/AICtable.csv') %>%
+  mutate(run2.2015 = ifelse(bestmodel == 1, "Migrant",
+    ifelse(bestmodel == 2, "MixedMigrant", 
+      ifelse(bestmodel == 3, "Disperser",
+        ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
+  rename(mod2.2015 = bestmodel)
+
+r2 <- full_join(nsd14.r2, nsd15.r2, by = "animal") %>%
+  select(matches('animal|run|mod'))
+
+# run3
+nsd14.r3 <- read.csv('./run3/2014/AICtable.csv') %>%
+  mutate(run3.2014 = ifelse(bestmodel == 1, "Migrant",
+    ifelse(bestmodel == 2, "MixedMigrant", 
+      ifelse(bestmodel == 3, "Disperser",
+        ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
+  rename(mod3.2014 = bestmodel)
+
+
+nsd15.r3 <- read.csv('./run3/2015/AICtable.csv') %>%
+  mutate(run3.2015 = ifelse(bestmodel == 1, "Migrant",
+    ifelse(bestmodel == 2, "MixedMigrant", 
+      ifelse(bestmodel == 3, "Disperser",
+        ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
+  rename(mod3.2015 = bestmodel)
+
+r3 <- full_join(nsd14.r3, nsd15.r3, by = "animal") %>%
+  select(matches('animal|run|mod'))
+
 #################
 # misc helpful stuff
 ##################

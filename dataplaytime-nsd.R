@@ -45,47 +45,33 @@ nsd15.r1 <- read.csv('./run1/2015/AICtable.csv') %>%
 r1 <- full_join(nsd14.r1, nsd15.r1, by = "animal") %>%
   select(matches('animal|run|mod'))
 
-# run2
-nsd14.r2 <- read.csv('./run2/2014/AICtable.csv') %>%
-  mutate(run2.2014 = ifelse(bestmodel == 1, "Migrant",
+# run1
+nsd14.r4 <- read.csv('./run4/2014/AICtable.csv') %>%
+  mutate(run4.2014 = ifelse(bestmodel == 1, "Migrant",
     ifelse(bestmodel == 2, "MixedMigrant", 
       ifelse(bestmodel == 3, "Disperser",
         ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
-  rename(mod2.2014 = bestmodel)
+  rename(mod4.2014 = bestmodel)
 
-nsd15.r2 <- read.csv('./run2/2015/AICtable.csv') %>%
-  mutate(run2.2015 = ifelse(bestmodel == 1, "Migrant",
+nsd15.r4 <- read.csv('./run4/2015/AICtable.csv') %>%
+  mutate(run4.2015 = ifelse(bestmodel == 1, "Migrant",
     ifelse(bestmodel == 2, "MixedMigrant", 
       ifelse(bestmodel == 3, "Disperser",
         ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
-  rename(mod2.2015 = bestmodel)
+  rename(mod4.2015 = bestmodel)
 
-r2 <- full_join(nsd14.r2, nsd15.r2, by = "animal") %>%
-  select(matches('animal|run|mod'))
-
-# run3
-nsd14.r3 <- read.csv('./run3/2014/AICtable.csv') %>%
-  mutate(run3.2014 = ifelse(bestmodel == 1, "Migrant",
-    ifelse(bestmodel == 2, "MixedMigrant", 
-      ifelse(bestmodel == 3, "Disperser",
-        ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
-  rename(mod3.2014 = bestmodel)
-
-
-nsd15.r3 <- read.csv('./run3/2015/AICtable.csv') %>%
-  mutate(run3.2015 = ifelse(bestmodel == 1, "Migrant",
-    ifelse(bestmodel == 2, "MixedMigrant", 
-      ifelse(bestmodel == 3, "Disperser",
-        ifelse(bestmodel == 4, "Resident", "Nomad"))))) %>%
-  rename(mod3.2015 = bestmodel)
-
-r3 <- full_join(nsd14.r3, nsd15.r3, by = "animal") %>%
+r4 <- full_join(nsd14.r4, nsd15.r4, by = "animal") %>%
   select(matches('animal|run|mod'))
 
 # all runs
-nsd <- full_join(r1, r2, by = "animal") 
-nsd <- full_join(nsd, r3, by = "animal") %>%
+nsd <- full_join(r1, r4, by = "animal") %>%
   rename(AnimalID = animal)
+
+# comparing results of two runs
+View(nsd)
+par(mfrow=c(1,2))
+boxplot(nsd$mod1.2014, nsd$mod4.2014, main = 2014)
+boxplot(nsd$mod1.2015, nsd$mod4.2015, main = 2015)
 
 # if want to clean workspace
 rm(nsd14.r1, nsd14.r2, nsd14.r3, nsd15.r1, nsd15.r2, nsd15.r3, 
@@ -100,3 +86,4 @@ look <- look[, c("AnimalID", "Status", "nsd.look")]
 # all together now
 nsd.look <- full_join(nsd, look, by = "AnimalID")
 rm(look, nsd)
+View(nsd.look)

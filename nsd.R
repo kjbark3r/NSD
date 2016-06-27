@@ -31,7 +31,7 @@
 	#asymptotes - migration distance from starting point - km^2 
 		#migrant must move minimum 1 mile from starting location (2.2 km)
 		#mixed migrant must return half that distance
-		L_a1=1.21 #spring 2014 migration
+		L_a1=4.84 #spring 2014 migration
 
 	#duration - 1/4 duration of migration
 		#must remain on different seasonal range > 30 days
@@ -45,6 +45,8 @@
 # 2014 CODE
 ##################################
 
+# start date = 2014-02-26
+		
 # output subfolder
 out_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD\\output\\2014\\"
 out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\2014\\"
@@ -61,10 +63,10 @@ out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\2014\\"
   rm(out_workcomp, out_laptop)
 	
 # 2014 midpoint dates
-L_t1=18  # March 15
-U_t1=125 # June 30
-L_t2=171 # August 15
-U_t2=293 # December 15
+L_t1=35  # April 01
+U_t1=95 # May 31
+L_t2=188 # September 01
+U_t2=309 # December 31
 
 # data
 dataall <- read.csv("nsd-locs-2014.csv") 
@@ -249,6 +251,8 @@ for(i in 1:numelk) {
 # 2015 CODE
 ##################################
 
+# start date = 2015-01-24
+
 # output subfolder
 out_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\NSD\\output\\2015\\"
 out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\2015\\"
@@ -265,10 +269,10 @@ out_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\NSD\\output\\2015\\"
   rm(wd_workcomp, wd_laptop, out_workcomp, out_laptop)
 	  
 # 2015 midpoint dates
-L_t1=51  # March 15
-U_t1=158 # June 30
-L_t2=204 # August 15
-U_t2=326 # December 15
+L_t1=68  # April 01
+U_t1=128 # May 31
+L_t2=221 # September 01
+U_t2=342 # December 31
 
 # data
 detach(dataall)
