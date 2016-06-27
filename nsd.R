@@ -34,11 +34,11 @@
 		L_a1=4.84 #spring 2014 migration
 
 	#duration - 1/4 duration of migration
-		#must remain on different seasonal range > 30 days
+		#must remain on different seasonal range > 90 days
 		L_dur1=0
-		U_dur1=8
+		U_dur1=23
 		L_dur2=0
-		U_dur2=8
+		U_dur2=23
 					
 	
 ##################################
