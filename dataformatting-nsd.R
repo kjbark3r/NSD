@@ -65,6 +65,6 @@ locs14 <- subset(locs, Date < "2015-01-23")  #2015 capture date
 locs15 <- subset(locs, Date > "2015-01-23")
 
 #export data
-write.csv(locs, file = "nsd-locs-all.csv")
-write.csv(locs14, file = "nsd-locs-2014.csv")
-write.csv(locs15, file = "nsd-locs-2015.csv")
+write.csv(locs, file = "nsd-locs-all.csv", row.names = FALSE)
+write.csv(locs14, file = "nsd-locs-2014.csv", row.names = FALSE)
+write.csv(locs15, file = "nsd-locs-2015.csv", row.names = FALSE)

@@ -154,6 +154,36 @@ write.table(coefs, append=TRUE,
 #actually looking hard enough to see what it was doing.
 #reverting to previous...
 
+#################
+# storing UTMs of 1st locn
+##################
+dataall <- read.csv("nsd-locs-2014.csv")
+startloc <- data.frame(dataall$X_UTM[1], dataall$Y_UTM[1])
+colnames(startloc) <- c("start_X", "start_Y")
+
+#################
+# why duplicates in final df?
+##################
+nsd <- data.frame(matrix(ncol = 7, nrow = 0))
+  colnames(nsd) <- c("AnimalID", "Date", "Julian_date", "J_day_new",
+                     "X_UTM", "Y_UTM", "NSD")
+
+
+datasub <- subset(dataall, AnimalID==141630) %>%
+arrange(J_day_new) #IF BREAK try this without the pipe
+
+firstloc <- data.frame(datasub$X_UTM[1], datasub$Y_UTM[1]) #store starting UTMs
+colnames(firstloc) <- c("start_X", "start_Y")
+
+datasub <- subset(datasub, Date > "2014-06-30" & Date < "2014-09-01")	#summer = jul 1 - aug 31
+
+#for(i in 1:nrow(datasub)) {	#for each date in summer
+
+##Calculate & store NSD - distance from first location (km)
+datasub["NSD"] = ((((datasub$X_UTM - firstloc$start_X)/1000)^2) + (((datasub$Y_UTM - firstloc$start_Y)/1000)^2)) 
+nsd <- as.data.frame(bind_rows(nsd, datasub))
+#}
+
 ###################################
 #DELETED CODE
 #THAT WORKS BUT IS NO LONGER USEFUL
