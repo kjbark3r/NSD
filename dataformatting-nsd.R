@@ -52,17 +52,16 @@ locs$Date <- as.Date(locs$Date)
 locs$Julian_date <- ifelse(locs$Date < "2015-01-01",
   julian(locs$Date, origin = as.Date("2014-01-01"))+1,
   julian(locs$Date, origin = as.Date("2015-01-01"))+1)
-locs$J_day_new <- ifelse(locs$Date < "2015-01-01",
-  locs$Julian_date - 56, locs$Julian_date - 24) #from start dates
-    #56 = 2014-02-26        #24 = 2015-01-24     
+locs$J_day_new_spr <- locs$Julian_date - 56  #Feb. 26   
+locs$J_day_new_fall <- locs$Julian_date - 211 #Jul. 31
 
 #Remove extraneous columns
-locs <- subset(locs, select = c("AnimalID", "Date", "Julian_date", "J_day_new", 
-                                "X_UTM", "Y_UTM"))
+locs <- subset(locs, select = c("AnimalID", "Date", "Julian_date", "J_day_new_spr", 
+                                "J_day_new_fall", "X_UTM", "Y_UTM"))
   
 #Separate datasets for 2014 and 2015
-locs14 <- subset(locs, Date < "2015-01-23")  #2015 capture date
-locs15 <- subset(locs, Date > "2015-01-23")
+locs14 <- subset(locs, Date < "2015-02-26")  #2015 start date
+locs15 <- subset(locs, Date >= "2015-02-26")
 
 #export data
 write.csv(locs, file = "nsd-locs-all.csv", row.names = FALSE)
